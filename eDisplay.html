@@ -1,0 +1,248 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #003366;
+    color: white;
+}
+
+/* MAIN PAGE */
+#main {
+    width: 100vw;
+    height: 100vh;
+    padding: 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* TOP SLIDESHOW */
+#slideShow {
+    position: relative;
+    left: -35px;
+    top: -25px;
+
+    width: calc(100% + 70px);
+    height: 58vh;
+
+    border: none;
+    border-radius: 24px;
+
+    margin-bottom: 10px;
+
+    background: black;
+}
+
+/* BUTTONS */
+.bigBtn {
+    width: 100%;
+    padding: 35px;
+    margin: 18px 0;
+    font-size: 38px;
+    border: none;
+    border-radius: 24px;
+    background: #f5c542;
+    color: #002855;
+    font-weight: bold;
+}
+
+/* WELCOME TEXT */
+#welcomeText {
+    margin-top: 35px;
+    width: 100%;
+    text-align: center;
+    font-size: 52px;
+    font-weight: bold;
+    color: white;
+}
+
+/* OVERLAY */
+#overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    z-index: 9999;
+}
+
+/* POPUP WINDOW */
+#popup {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background: white;
+    border-radius: 20px;
+    overflow: auto;
+    box-shadow: 0 0 20px black;
+}
+
+/* IFRAME */
+#frame {
+    width: 100%;
+    height: 8000px;
+    border: none;
+}
+
+/* CLOSE + SCROLL BUTTONS */
+#closeBtn,
+.scrollBtn {
+    position: absolute;
+    right: 12px;
+    z-index: 10000;
+    width: 85px;
+    height: 85px;
+    font-size: 46px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+}
+
+#closeBtn {
+    top: 12px;
+    background: red;
+}
+
+#upBtn {
+    top: 115px;
+    background: #4285F4;
+}
+
+#downBtn {
+    top: 215px;
+    background: #4285F4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="main">
+
+    <!-- TOP SLIDESHOW -->
+    <iframe
+        id="slideShow"
+        src="https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/embed?start=true&loop=true&delayms=4000&rm=minimal"
+        allowfullscreen>
+    </iframe>
+
+    <!-- BUTTONS -->
+
+    <button class="bigBtn"
+        onclick="openOverlay('https://app.smore.com/n/s25dw')">
+        Open Newsletter
+    </button>
+
+    <button class="bigBtn"
+        onclick="window.location.href='https://sites.google.com/g.gcpsk12.org/alcova-guide/home'">
+        Open Guide Site
+    </button>
+
+    <button class="bigBtn"
+        onclick="openOverlay('https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/present?slide=id.p')">
+        Slideshow
+    </button>
+
+    <!-- WELCOME TEXT -->
+    <div id="welcomeText">
+        Welcome to Alcova Elementary School
+    </div>
+
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay">
+
+    <button id="closeBtn" onclick="closeOverlay()">✕</button>
+
+    <button id="upBtn"
+        class="scrollBtn"
+        onmousedown="startScroll(-25)"
+        onmouseup="stopScroll()"
+        onmouseleave="stopScroll()"
+        ontouchstart="startScroll(-25)"
+        ontouchend="stopScroll()">
+        ▲
+    </button>
+
+    <button id="downBtn"
+        class="scrollBtn"
+        onmousedown="startScroll(25)"
+        onmouseup="stopScroll()"
+        onmouseleave="stopScroll()"
+        ontouchstart="startScroll(25)"
+        ontouchend="stopScroll()">
+        ▼
+    </button>
+
+    <div id="popup">
+
+        <iframe id="frame"></iframe>
+
+    </div>
+
+</div>
+
+<script>
+
+let scrollInterval;
+
+/* OPEN OVERLAY */
+function openOverlay(url) {
+
+    document.getElementById("frame").src = url;
+
+    document.getElementById("overlay").style.display = "block";
+
+    document.getElementById("popup").scrollTop = 0;
+}
+
+/* CLOSE OVERLAY */
+function closeOverlay() {
+
+    stopScroll();
+
+    document.getElementById("overlay").style.display = "none";
+
+    document.getElementById("frame").src = "";
+}
+
+/* START CONTINUOUS SCROLL */
+function startScroll(amount) {
+
+    stopScroll();
+
+    scrollInterval = setInterval(function() {
+
+        document.getElementById("popup").scrollBy({
+            top: amount,
+            behavior: "auto"
+        });
+
+    }, 20);
+}
+
+/* STOP CONTINUOUS SCROLL */
+function stopScroll() {
+
+    clearInterval(scrollInterval);
+}
+
+</script>
+
+</body>
+</html>
+```
