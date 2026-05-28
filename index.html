@@ -540,7 +540,7 @@ function setQR(url,text){
 
 function setQRMode(url,text){
 
-    closeOverlay();
+    closeOverlayOnly();
 
     setQR(url,text);
 
@@ -553,7 +553,7 @@ function setQRMode(url,text){
 
 function showHome(){
 
-    closeOverlay();
+    closeOverlayOnly();
 
     setQR(
         homeQR,
@@ -579,18 +579,26 @@ function openOverlay(url){
 }
 
 /* ===================== */
-/* CLOSE OVERLAY */
+/* CLOSE OVERLAY ONLY */
 /* ===================== */
 
-function closeOverlay(){
+function closeOverlayOnly(){
 
     stopScroll();
 
     document.getElementById("overlay").style.display = "none";
 
     document.getElementById("frame").src = "";
+}
 
-    /* RESET TO HOME QR */
+/* ===================== */
+/* CLOSE OVERLAY WITH X */
+/* ===================== */
+
+function closeOverlay(){
+
+    closeOverlayOnly();
+
     setQR(
         homeQR,
         "www.AlcovaES.com"
