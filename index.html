@@ -589,6 +589,14 @@ function closeOverlay(){
     document.getElementById("overlay").style.display = "none";
 
     document.getElementById("frame").src = "";
+
+    /* RESET TO HOME QR */
+    setQR(
+        homeQR,
+        "www.AlcovaES.com"
+    );
+
+    document.getElementById("homeBtn").style.display = "none";
 }
 
 /* ===================== */
