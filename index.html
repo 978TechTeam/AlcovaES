@@ -1,197 +1,465 @@
-```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alcova ES Kiosk</title>
 
 <style>
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: #003366;
-    color: white;
+:root{
+    --blue:#003366;
+    --darkBlue:#001f3f;
+    --gold:#f5c542;
+    --gold2:#ffd84d;
+    --green:#18a558;
+    --footerHeight:90px;
 }
 
-/* MAIN PAGE */
-#main {
-    width: 100vw;
-    height: 100vh;
-    padding: 30px;
-    box-sizing: border-box;
-    position: relative;
+*{
+    box-sizing:border-box;
 }
 
-/* TOP SLIDESHOW */
-#slideShow {
-    position: relative;
-    left: -35px;
-    top: -25px;
-
-    width: calc(100% + 70px);
-    height: 58vh;
-
-    border: none;
-    border-radius: 24px;
-
-    margin-bottom: 10px;
-
-    background: black;
+html,body{
+    margin:0;
+    padding:0;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#000;
+    color:white;
+    user-select:none;
+    -webkit-user-select:none;
 }
 
-/* BUTTONS */
-.bigBtn {
-    width: 100%;
-    padding: 35px;
-    margin: 18px 0;
-    font-size: 38px;
-    border: none;
-    border-radius: 24px;
-    background: #f5c542;
-    color: #002855;
-    font-weight: bold;
+button{
+    touch-action:manipulation;
 }
 
-/* WELCOME TEXT */
-#welcomeText {
-    margin-top: 35px;
-    width: 100%;
-    text-align: center;
-    font-size: 52px;
-    font-weight: bold;
-    color: white;
+/* MAIN SCREEN */
+
+#screen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:calc(100vh - var(--footerHeight));
+    display:flex;
+    flex-direction:column;
+    background:#000;
 }
 
+/* ========================= */
+/* AREA 1 - SLIDESHOW */
+/* ========================= */
+
+#slideshowArea{
+    width:100%;
+    height:54vh;
+    background:#000;
+    overflow:hidden;
+    position:relative;
+    flex-shrink:0;
+}
+
+#slideShow{
+    position:absolute;
+    left:-45px;
+    top:-30px;
+    width:calc(100% + 90px);
+    height:calc(100% + 60px);
+    border:none;
+    background:#000;
+}
+
+/* ========================= */
+/* AREA 2 - QR AREA */
+/* ========================= */
+
+#qrArea{
+    width:100%;
+    background:#000;
+    text-align:center;
+    padding:10px 0 12px 0;
+    flex-shrink:0;
+}
+
+#qrCode{
+    width:240px;
+    height:240px;
+    background:white;
+    padding:10px;
+    border-radius:16px;
+    display:block;
+    margin:auto;
+}
+
+#qrText{
+    margin-top:8px;
+    font-size:28px;
+    font-weight:bold;
+    color:white;
+}
+
+/* ========================= */
+/* AREA 3 - BUTTON AREA */
+/* ========================= */
+
+#buttonArea{
+    flex:1;
+    width:100%;
+    background:var(--blue);
+    padding:16px 28px 12px 28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+}
+
+.QRbtn,
+.LINKbtn{
+    width:100%;
+    padding:18px;
+    margin:5px 0;
+    font-size:30px;
+    font-weight:bold;
+    color:#002855;
+    border:none;
+    border-radius:22px;
+}
+
+.QRbtn{
+    background:var(--gold);
+}
+
+.LINKbtn{
+    background:var(--gold2);
+}
+
+#welcomeText{
+    margin-top:12px;
+    text-align:center;
+    font-size:34px;
+    font-weight:bold;
+    color:white;
+}
+
+/* ========================= */
+/* AREA 4 - FOOTER */
+/* ========================= */
+
+#clockBar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:var(--footerHeight);
+
+    background:linear-gradient(
+        90deg,
+        var(--darkBlue),
+        var(--blue),
+        var(--darkBlue)
+    );
+
+    border-top:4px solid var(--gold);
+
+    display:flex;
+    padding:8px;
+    gap:8px;
+
+    z-index:50;
+}
+
+.clockBox{
+    flex:1;
+    background:white;
+    color:#002855;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+    font-weight:bold;
+
+    box-shadow:inset 0 0 0 3px var(--gold);
+}
+
+/* ========================= */
+/* SETTINGS BUTTON */
+/* ========================= */
+
+#gearBtn{
+    position:fixed;
+    top:18px;
+    left:18px;
+
+    width:70px;
+    height:70px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(0,0,0,.45);
+    color:white;
+
+    font-size:42px;
+
+    z-index:100;
+}
+
+/* ========================= */
+/* HOME BUTTON */
+/* ========================= */
+
+#homeBtn{
+    display:none;
+
+    position:fixed;
+    right:18px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:95px;
+    height:95px;
+
+    border:none;
+    border-radius:50%;
+
+    background:var(--green);
+    color:white;
+
+    font-size:42px;
+    font-weight:bold;
+
+    z-index:100;
+}
+
+/* ========================= */
 /* OVERLAY */
-#overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.75);
-    z-index: 9999;
+/* ========================= */
+
+#overlay{
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.75);
+
+    z-index:9999;
 }
 
-/* POPUP WINDOW */
-#popup {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 90%;
-    background: white;
-    border-radius: 20px;
-    overflow: auto;
-    box-shadow: 0 0 20px black;
+#popup{
+    position:absolute;
+
+    top:5%;
+    left:5%;
+
+    width:90%;
+    height:90%;
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:auto;
+
+    box-shadow:0 0 20px black;
 }
 
-/* IFRAME */
-#frame {
-    width: 100%;
-    height: 8000px;
-    border: none;
+#frame{
+    width:100%;
+    height:8000px;
+    border:none;
 }
 
-/* CLOSE + SCROLL BUTTONS */
+/* ========================= */
+/* OVERLAY BUTTONS */
+/* ========================= */
+
+#controlStack{
+    position:absolute;
+
+    right:12px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+
+    z-index:10000;
+}
+
 #closeBtn,
-.scrollBtn {
-    position: absolute;
-    right: 12px;
-    z-index: 10000;
-    width: 85px;
-    height: 85px;
-    font-size: 46px;
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-weight: bold;
+.scrollBtn{
+
+    width:95px;
+    height:95px;
+
+    border:none;
+    border-radius:50%;
+
+    color:white;
+
+    font-size:50px;
+    font-weight:bold;
 }
 
-#closeBtn {
-    top: 12px;
-    background: red;
+#closeBtn{
+    background:red;
 }
 
-#upBtn {
-    top: 115px;
-    background: #4285F4;
-}
-
-#downBtn {
-    top: 215px;
-    background: #4285F4;
+#upBtn,
+#downBtn{
+    background:#4285F4;
 }
 
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 
-<div id="main">
+<button id="gearBtn">⚙</button>
 
-    <!-- TOP SLIDESHOW -->
-    <iframe
-        id="slideShow"
-        src="https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/embed?start=true&loop=true&delayms=4000&rm=minimal"
-        allowfullscreen>
-    </iframe>
+<button id="homeBtn" onclick="showHome()">⌂</button>
 
-    <!-- BUTTONS -->
+<div id="screen">
 
-    <button class="bigBtn"
-        onclick="openOverlay('https://app.smore.com/n/s25dw')">
-        Open Newsletter
-    </button>
+    <!-- ===================== -->
+    <!-- AREA 1 - SLIDESHOW -->
+    <!-- ===================== -->
 
-    <button class="bigBtn"
-        onclick="window.location.href='https://sites.google.com/g.gcpsk12.org/alcova-guide/home'">
-        Open Guide Site
-    </button>
+    <div id="slideshowArea">
 
-    <button class="bigBtn"
-        onclick="openOverlay('https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/present?slide=id.p')">
-        Slideshow
-    </button>
+        <iframe
+            id="slideShow"
+            src="https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/embed?start=true&loop=true&delayms=4000&rm=minimal"
+            allowfullscreen>
+        </iframe>
 
-    <!-- WELCOME TEXT -->
-    <div id="welcomeText">
-        Welcome to Alcova Elementary School
+    </div>
+
+    <!-- ===================== -->
+    <!-- AREA 2 - QR -->
+    <!-- ===================== -->
+
+    <div id="qrArea">
+
+        <img
+            id="qrCode"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https://www.AlcovaES.com"
+        >
+
+        <div id="qrText">
+            www.AlcovaES.com
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- AREA 3 - BUTTONS -->
+    <!-- ===================== -->
+
+    <div id="buttonArea">
+
+        <button
+            class="LINKbtn"
+            onclick="openOverlay('https://app.smore.com/n/s25dw')">
+
+            Open Newsletter
+
+        </button>
+
+        <button
+            class="QRbtn"
+            onclick="setQRMode('https://sites.google.com/g.gcpsk12.org/alcova-guide/home','Scan for Guide Site')">
+
+            Open Guide Site
+
+        </button>
+
+        <button
+            class="LINKbtn"
+            onclick="openOverlay('https://docs.google.com/presentation/d/13Z3sWnDp5r-w0mLk8WunI0bipa4ge4PV4OqqHgEQSe0/present?slide=id.p')">
+
+            Slideshow
+
+        </button>
+
+        <div id="welcomeText">
+            Welcome to Alcova Elementary School
+        </div>
+
     </div>
 
 </div>
 
+<!-- ===================== -->
+<!-- FOOTER -->
+<!-- ===================== -->
+
+<div id="clockBar">
+
+    <div class="clockBox" id="dateBox">
+        Loading Date...
+    </div>
+
+    <div class="clockBox" id="timeBox">
+        Loading Time...
+    </div>
+
+</div>
+
+<!-- ===================== -->
 <!-- OVERLAY -->
+<!-- ===================== -->
+
 <div id="overlay">
 
-    <button id="closeBtn" onclick="closeOverlay()">✕</button>
+    <div id="controlStack">
 
-    <button id="upBtn"
-        class="scrollBtn"
-        onmousedown="startScroll(-25)"
-        onmouseup="stopScroll()"
-        onmouseleave="stopScroll()"
-        ontouchstart="startScroll(-25)"
-        ontouchend="stopScroll()">
-        ▲
-    </button>
+        <button id="closeBtn" onclick="closeOverlay()">
+            ✕
+        </button>
 
-    <button id="downBtn"
-        class="scrollBtn"
-        onmousedown="startScroll(25)"
-        onmouseup="stopScroll()"
-        onmouseleave="stopScroll()"
-        ontouchstart="startScroll(25)"
-        ontouchend="stopScroll()">
-        ▼
-    </button>
+        <button
+            id="upBtn"
+            class="scrollBtn"
+            onmousedown="startScroll(-25)"
+            onmouseup="stopScroll()"
+            onmouseleave="stopScroll()"
+            ontouchstart="startScroll(-25)"
+            ontouchend="stopScroll()">
+
+            ▲
+
+        </button>
+
+        <button
+            id="downBtn"
+            class="scrollBtn"
+            onmousedown="startScroll(25)"
+            onmouseup="stopScroll()"
+            onmouseleave="stopScroll()"
+            ontouchstart="startScroll(25)"
+            ontouchend="stopScroll()">
+
+            ▼
+
+        </button>
+
+    </div>
 
     <div id="popup">
-
         <iframe id="frame"></iframe>
-
     </div>
 
 </div>
@@ -200,18 +468,120 @@ html, body {
 
 let scrollInterval;
 
-/* OPEN OVERLAY */
-function openOverlay(url) {
+const homeQR = "https://www.AlcovaES.com";
+
+/* ===================== */
+/* DISABLE RIGHT CLICK */
+/* ===================== */
+
+window.addEventListener(
+    "contextmenu",
+    function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    },
+    true
+);
+
+/* ===================== */
+/* CLOCK */
+/* ===================== */
+
+function updateClock(){
+
+    const now = new Date();
+
+    document.getElementById("dateBox").innerText =
+        now.toLocaleDateString(
+            "en-US",
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric",
+                year:"numeric"
+            }
+        );
+
+    document.getElementById("timeBox").innerText =
+        now.toLocaleTimeString(
+            "en-US",
+            {
+                hour:"numeric",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* ===================== */
+/* QR */
+/* ===================== */
+
+function setQR(url,text){
+
+    document.getElementById("qrCode").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" +
+        encodeURIComponent(url) +
+        "&t=" +
+        new Date().getTime();
+
+    document.getElementById("qrText").innerText = text;
+}
+
+/* ===================== */
+/* QR BUTTON */
+/* ===================== */
+
+function setQRMode(url,text){
+
+    closeOverlay();
+
+    setQR(url,text);
+
+    document.getElementById("homeBtn").style.display = "block";
+}
+
+/* ===================== */
+/* HOME BUTTON */
+/* ===================== */
+
+function showHome(){
+
+    closeOverlay();
+
+    setQR(
+        homeQR,
+        "www.AlcovaES.com"
+    );
+
+    document.getElementById("homeBtn").style.display = "none";
+}
+
+/* ===================== */
+/* LINK BUTTON */
+/* ===================== */
+
+function openOverlay(url){
 
     document.getElementById("frame").src = url;
 
     document.getElementById("overlay").style.display = "block";
 
     document.getElementById("popup").scrollTop = 0;
+
+    document.getElementById("homeBtn").style.display = "none";
 }
 
+/* ===================== */
 /* CLOSE OVERLAY */
-function closeOverlay() {
+/* ===================== */
+
+function closeOverlay(){
 
     stopScroll();
 
@@ -220,23 +590,32 @@ function closeOverlay() {
     document.getElementById("frame").src = "";
 }
 
-/* START CONTINUOUS SCROLL */
-function startScroll(amount) {
+/* ===================== */
+/* SCROLL */
+/* ===================== */
+
+function startScroll(amount){
 
     stopScroll();
 
-    scrollInterval = setInterval(function() {
+    scrollInterval = setInterval(
 
-        document.getElementById("popup").scrollBy({
-            top: amount,
-            behavior: "auto"
-        });
+        function(){
 
-    }, 20);
+            document.getElementById("popup").scrollBy(
+                {
+                    top:amount,
+                    behavior:"auto"
+                }
+            );
+
+        },
+
+        20
+    );
 }
 
-/* STOP CONTINUOUS SCROLL */
-function stopScroll() {
+function stopScroll(){
 
     clearInterval(scrollInterval);
 }
@@ -245,4 +624,3 @@ function stopScroll() {
 
 </body>
 </html>
-```
